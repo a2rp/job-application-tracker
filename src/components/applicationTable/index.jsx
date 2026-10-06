@@ -49,7 +49,9 @@ const ApplicationTable = ({
                 <p className={styles.label}>Your search</p>
                 <h2 id="application-list-title">Application log</h2>
                 <p className={styles.description}>
-                    {applications.length} {applications.length === 1 ? "role" : "roles"} to keep in view
+                    {applications.length}{" "}
+                    {applications.length === 1 ? "role" : "roles"} to keep in
+                    view
                 </p>
             </div>
             <button className={styles.addButton} type="button" onClick={onAdd}>
@@ -61,11 +63,15 @@ const ApplicationTable = ({
         <div className={styles.toolbar}>
             <label className={styles.searchField}>
                 <FiSearch aria-hidden="true" />
-                <span className={styles.screenReaderOnly}>Search roles and companies</span>
+                <span className={styles.screenReaderOnly}>
+                    Search roles and companies
+                </span>
                 <input
                     type="search"
                     value={search}
-                    onChange={(changeEvent) => onSearchChange(changeEvent.target.value)}
+                    onChange={(changeEvent) =>
+                        onSearchChange(changeEvent.target.value)
+                    }
                     placeholder="Search roles, companies, notes..."
                 />
             </label>
@@ -73,7 +79,9 @@ const ApplicationTable = ({
                 <span>Status</span>
                 <select
                     value={statusFilter}
-                    onChange={(changeEvent) => onStatusFilterChange(changeEvent.target.value)}
+                    onChange={(changeEvent) =>
+                        onStatusFilterChange(changeEvent.target.value)
+                    }
                 >
                     <option value="all">All statuses</option>
                     {applicationStatuses.map((status) => (
@@ -84,19 +92,35 @@ const ApplicationTable = ({
         </div>
 
         {applications.length ? (
-            <div className={styles.table} role="table" aria-label="Job applications">
+            <div
+                className={styles.table}
+                role="table"
+                aria-label="Job applications"
+            >
                 <div className={styles.tableHead} role="row">
                     <span role="columnheader">Company and role</span>
                     <span role="columnheader">Status</span>
                     <span role="columnheader">Applied</span>
                     <span role="columnheader">Next step</span>
-                    <span className={styles.screenReaderOnly} role="columnheader">Actions</span>
+                    <span
+                        className={styles.screenReaderOnly}
+                        role="columnheader"
+                    >
+                        Actions
+                    </span>
                 </div>
                 <div className={styles.tableBody} role="rowgroup">
                     {applications.map((application) => (
-                        <article className={styles.application} role="row" key={application.id}>
+                        <article
+                            className={styles.application}
+                            role="row"
+                            key={application.id}
+                        >
                             <div className={styles.companyCell} role="cell">
-                                <span className={styles.companyMark} aria-hidden="true">
+                                <span
+                                    className={styles.companyMark}
+                                    aria-hidden="true"
+                                >
                                     {getInitials(application.company)}
                                 </span>
                                 <div className={styles.companyInfo}>
@@ -104,8 +128,10 @@ const ApplicationTable = ({
                                     <span>{application.role}</span>
                                     <span className={styles.location}>
                                         <FiMapPin aria-hidden="true" />
-                                        {application.location || application.workMode}
-                                        {application.location && application.workMode
+                                        {application.location ||
+                                            application.workMode}
+                                        {application.location &&
+                                        application.workMode
                                             ? " - " + application.workMode
                                             : ""}
                                     </span>
@@ -116,7 +142,12 @@ const ApplicationTable = ({
                                         href={application.url}
                                         target="_blank"
                                         rel="noreferrer"
-                                        aria-label={"Open job link for " + application.role + " at " + application.company}
+                                        aria-label={
+                                            "Open job link for " +
+                                            application.role +
+                                            " at " +
+                                            application.company
+                                        }
                                     >
                                         <FiExternalLink aria-hidden="true" />
                                     </a>
@@ -129,9 +160,17 @@ const ApplicationTable = ({
                                     className={styles.statusSelect}
                                     value={application.status}
                                     onChange={(changeEvent) =>
-                                        onStatusChange(application.id, changeEvent.target.value)
+                                        onStatusChange(
+                                            application.id,
+                                            changeEvent.target.value,
+                                        )
                                     }
-                                    aria-label={"Status for " + application.role + " at " + application.company}
+                                    aria-label={
+                                        "Status for " +
+                                        application.role +
+                                        " at " +
+                                        application.company
+                                    }
                                 >
                                     {applicationStatuses.map((status) => (
                                         <option key={status}>{status}</option>
@@ -140,7 +179,9 @@ const ApplicationTable = ({
                             </div>
 
                             <div className={styles.dateCell} role="cell">
-                                <span className={styles.cellLabel}>Applied</span>
+                                <span className={styles.cellLabel}>
+                                    Applied
+                                </span>
                                 <span className={styles.date}>
                                     <FiCalendar aria-hidden="true" />
                                     {formatDate(application.dateApplied)}
@@ -148,15 +189,28 @@ const ApplicationTable = ({
                             </div>
 
                             <div className={styles.nextStepCell} role="cell">
-                                <span className={styles.cellLabel}>Next step</span>
-                                <strong>{application.nextStep || "Add a next step"}</strong>
-                                <span>{application.nextDate ? formatDate(application.nextDate) : "No date set"}</span>
+                                <span className={styles.cellLabel}>
+                                    Next step
+                                </span>
+                                <strong>
+                                    {application.nextStep || "Add a next step"}
+                                </strong>
+                                <span>
+                                    {application.nextDate
+                                        ? formatDate(application.nextDate)
+                                        : "No date set"}
+                                </span>
                             </div>
 
                             <div className={styles.actions} role="cell">
                                 <button
                                     type="button"
-                                    aria-label={"Edit " + application.role + " at " + application.company}
+                                    aria-label={
+                                        "Edit " +
+                                        application.role +
+                                        " at " +
+                                        application.company
+                                    }
                                     title="Edit application"
                                     onClick={() => onEdit(application)}
                                 >
@@ -165,7 +219,12 @@ const ApplicationTable = ({
                                 <button
                                     className={styles.deleteButton}
                                     type="button"
-                                    aria-label={"Remove " + application.role + " at " + application.company}
+                                    aria-label={
+                                        "Remove " +
+                                        application.role +
+                                        " at " +
+                                        application.company
+                                    }
                                     title="Remove application"
                                     onClick={() => onDelete(application)}
                                 >
@@ -180,7 +239,9 @@ const ApplicationTable = ({
             <div className={styles.empty}>
                 <h3>No applications found</h3>
                 <p>Try another search or status, or clear the filters.</p>
-                <button type="button" onClick={onClearFilters}>Clear filters</button>
+                <button type="button" onClick={onClearFilters}>
+                    Clear filters
+                </button>
             </div>
         )}
     </section>

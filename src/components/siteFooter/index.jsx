@@ -78,8 +78,12 @@ const SiteFooter = () => (
                     <a
                         href={url}
                         key={label}
-                        target={url.startsWith("mailto:") ? undefined : "_blank"}
-                        rel={url.startsWith("mailto:") ? undefined : "noreferrer"}
+                        target={
+                            url.startsWith("mailto:") ? undefined : "_blank"
+                        }
+                        rel={
+                            url.startsWith("mailto:") ? undefined : "noreferrer"
+                        }
                     >
                         <Icon aria-hidden="true" />
                         {label}

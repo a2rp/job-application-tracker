@@ -13,7 +13,9 @@
     color: var(--color-ink);
     box-shadow: 0 5px 16px rgb(32 33 30 / 18%);
     font-size: 19px;
-    transition: border-color 150ms ease, box-shadow 150ms ease;
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease;
 
     &:hover {
         border-color: #86b629;

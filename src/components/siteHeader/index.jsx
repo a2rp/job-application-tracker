@@ -37,16 +37,24 @@ const SiteHeader = () => {
                     <span className={styles.brandMark}>
                         <FiBriefcase aria-hidden="true" />
                     </span>
-                    <span>rolebook<span className={styles.brandDot}>.</span></span>
+                    <span>
+                        rolebook<span className={styles.brandDot}>.</span>
+                    </span>
                 </a>
                 <nav
                     className={navClass}
                     id="site-navigation"
                     aria-label="Main navigation"
                 >
-                    <a href="#applications" onClick={closeMenu}>Overview</a>
-                    <a href="#application-list" onClick={closeMenu}>Applications</a>
-                    <a href="#follow-ups" onClick={closeMenu}>Follow-ups</a>
+                    <a href="#applications" onClick={closeMenu}>
+                        Overview
+                    </a>
+                    <a href="#application-list" onClick={closeMenu}>
+                        Applications
+                    </a>
+                    <a href="#follow-ups" onClick={closeMenu}>
+                        Follow-ups
+                    </a>
                 </nav>
                 <div className={styles.actions}>
                     <a
@@ -61,12 +69,20 @@ const SiteHeader = () => {
                     <button
                         className={styles.menuButton}
                         type="button"
-                        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+                        aria-label={
+                            menuOpen
+                                ? "Close navigation menu"
+                                : "Open navigation menu"
+                        }
                         aria-expanded={menuOpen}
                         aria-controls="site-navigation"
                         onClick={() => setMenuOpen(!menuOpen)}
                     >
-                        {menuOpen ? <FiX aria-hidden="true" /> : <FiMenu aria-hidden="true" />}
+                        {menuOpen ? (
+                            <FiX aria-hidden="true" />
+                        ) : (
+                            <FiMenu aria-hidden="true" />
+                        )}
                     </button>
                 </div>
             </div>

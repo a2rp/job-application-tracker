@@ -1,6 +1,9 @@
 ﻿import { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
-import { applicationStatuses, workModes } from "../../data/applicationStatuses.js";
+import {
+    applicationStatuses,
+    workModes,
+} from "../../data/applicationStatuses.js";
 import styles from "./styles.module.css";
 
 const getToday = () => {
@@ -79,7 +82,9 @@ const ApplicationModal = ({ application, onClose, onSave }) => {
                     <div>
                         <p className={styles.label}>Your job search</p>
                         <h2 id="application-modal-title">
-                            {application ? "Edit application" : "Add an application"}
+                            {application
+                                ? "Edit application"
+                                : "Add an application"}
                         </h2>
                         <p>Save the details you will want to find later.</p>
                     </div>
@@ -121,7 +126,11 @@ const ApplicationModal = ({ application, onClose, onSave }) => {
                     <div className={styles.fieldsThree}>
                         <label className={styles.field}>
                             Status
-                            <select name="status" value={form.status} onChange={updateField}>
+                            <select
+                                name="status"
+                                value={form.status}
+                                onChange={updateField}
+                            >
                                 {applicationStatuses.map((status) => (
                                     <option key={status}>{status}</option>
                                 ))}
@@ -129,7 +138,11 @@ const ApplicationModal = ({ application, onClose, onSave }) => {
                         </label>
                         <label className={styles.field}>
                             Work mode
-                            <select name="workMode" value={form.workMode} onChange={updateField}>
+                            <select
+                                name="workMode"
+                                value={form.workMode}
+                                onChange={updateField}
+                            >
                                 {workModes.map((workMode) => (
                                     <option key={workMode}>{workMode}</option>
                                 ))}

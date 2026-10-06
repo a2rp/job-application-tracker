@@ -88,7 +88,10 @@ const CareerOverview = ({ applications }) => {
                 </div>
                 <div className={styles.photo}>
                     <img
-                        src={import.meta.env.BASE_URL + "images/career-workspace.jpg"}
+                        src={
+                            import.meta.env.BASE_URL +
+                            "images/career-workspace.jpg"
+                        }
                         alt="Laptop, coffee, and notebook ready for a work session"
                     />
                     <div className={styles.photoNote}>

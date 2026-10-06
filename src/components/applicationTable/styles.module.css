@@ -47,9 +47,13 @@
         color: white;
         font-size: 12px;
         font-weight: 700;
-        transition: border-color 150ms ease, box-shadow 150ms ease;
+        transition:
+            border-color 150ms ease,
+            box-shadow 150ms ease;
 
-        svg { font-size: 16px; }
+        svg {
+            font-size: 16px;
+        }
 
         &:hover {
             border-color: #45463f;
@@ -86,7 +90,10 @@
         background: #fff;
         color: var(--color-muted);
 
-        > svg { flex: 0 0 auto; font-size: 16px; }
+        > svg {
+            flex: 0 0 auto;
+            font-size: 16px;
+        }
 
         input {
             width: 100%;
@@ -97,7 +104,9 @@
             font-size: 13px;
             outline: 0;
 
-            &::placeholder { color: #898a82; }
+            &::placeholder {
+                color: #898a82;
+            }
         }
 
         &:focus-within {
@@ -136,7 +145,10 @@
     .tableHead,
     .application {
         display: grid;
-        grid-template-columns: minmax(190px, 1.45fr) minmax(120px, 0.82fr) minmax(95px, 0.72fr) minmax(145px, 1.05fr) 72px;
+        grid-template-columns: minmax(190px, 1.45fr) minmax(
+                120px,
+                0.82fr
+            ) minmax(95px, 0.72fr) minmax(145px, 1.05fr) 72px;
         align-items: center;
         gap: 12px;
     }
@@ -154,7 +166,9 @@
         min-height: 100px;
         padding: 14px 20px;
         border-top: 1px solid #e8e9e3;
-        transition: border-color 150ms ease, box-shadow 150ms ease;
+        transition:
+            border-color 150ms ease,
+            box-shadow 150ms ease;
 
         &:hover {
             border-color: #cbd6ad;
@@ -214,7 +228,10 @@
         color: #74766f;
         font-size: 10px;
 
-        svg { flex: 0 0 auto; font-size: 11px; }
+        svg {
+            flex: 0 0 auto;
+            font-size: 11px;
+        }
     }
 
     .jobLink {
@@ -226,7 +243,9 @@
         border: 1px solid var(--color-line);
         border-radius: 7px;
         color: var(--color-purple-dark);
-        transition: border-color 150ms ease, box-shadow 150ms ease;
+        transition:
+            border-color 150ms ease,
+            box-shadow 150ms ease;
 
         &:hover {
             border-color: var(--color-purple);
@@ -273,7 +292,10 @@
         color: var(--color-muted);
         font-size: 11px;
 
-        svg { color: var(--color-purple-dark); font-size: 13px; }
+        svg {
+            color: var(--color-purple-dark);
+            font-size: 13px;
+        }
     }
 
     .nextStepCell {
@@ -306,7 +328,9 @@
             background: transparent;
             color: #5d5e58;
             font-size: 14px;
-            transition: border-color 150ms ease, box-shadow 150ms ease;
+            transition:
+                border-color 150ms ease,
+                box-shadow 150ms ease;
 
             &:hover {
                 border-color: var(--color-line);
@@ -357,7 +381,9 @@
             color: var(--color-purple-dark);
             font-size: 12px;
             font-weight: 700;
-            transition: border-color 150ms ease, box-shadow 150ms ease;
+            transition:
+                border-color 150ms ease,
+                box-shadow 150ms ease;
 
             &:hover {
                 border-color: var(--color-purple);
@@ -379,12 +405,18 @@
     @media (max-width: 900px) {
         .tableHead,
         .application {
-            grid-template-columns: minmax(165px, 1.35fr) minmax(115px, 0.8fr) minmax(85px, 0.75fr) minmax(130px, 1fr) 66px;
+            grid-template-columns: minmax(165px, 1.35fr) minmax(
+                    115px,
+                    0.8fr
+                ) minmax(85px, 0.75fr) minmax(130px, 1fr) 66px;
             gap: 8px;
         }
 
         .tableHead,
-        .application { padding-right: 14px; padding-left: 14px; }
+        .application {
+            padding-right: 14px;
+            padding-left: 14px;
+        }
     }
 
     @media (max-width: 680px) {
@@ -393,7 +425,9 @@
             padding: 19px 17px 16px;
         }
 
-        h2 { font-size: 27px; }
+        h2 {
+            font-size: 27px;
+        }
 
         .addButton {
             min-height: 39px;
@@ -407,8 +441,13 @@
             padding: 12px 17px;
         }
 
-        .filterField { width: 100%; flex-basis: auto; }
-        .tableHead { display: none; }
+        .filterField {
+            width: 100%;
+            flex-basis: auto;
+        }
+        .tableHead {
+            display: none;
+        }
 
         .application {
             grid-template-columns: minmax(0, 1fr) minmax(100px, 0.8fr) 40px;
@@ -416,10 +455,18 @@
             padding: 16px;
         }
 
-        .companyCell { grid-column: 1 / -1; }
-        .statusCell { grid-column: 1; }
-        .dateCell { grid-column: 2; }
-        .nextStepCell { grid-column: 1 / 3; }
+        .companyCell {
+            grid-column: 1 / -1;
+        }
+        .statusCell {
+            grid-column: 1;
+        }
+        .dateCell {
+            grid-column: 2;
+        }
+        .nextStepCell {
+            grid-column: 1 / 3;
+        }
 
         .actions {
             grid-column: 3;
@@ -428,11 +475,17 @@
             flex-direction: column;
         }
 
-        .cellLabel { display: block; }
+        .cellLabel {
+            display: block;
+        }
     }
 
     @media (max-width: 420px) {
-        .heading { flex-direction: column; }
-        .addButton { width: 100%; }
+        .heading {
+            flex-direction: column;
+        }
+        .addButton {
+            width: 100%;
+        }
     }
 }

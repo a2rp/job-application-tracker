@@ -27,9 +27,7 @@ const FollowUpPanel = ({ applications, onEdit }) => {
             (application) =>
                 application.nextDate && application.status !== "Closed",
         )
-        .sort((first, second) =>
-            first.nextDate.localeCompare(second.nextDate),
-        )
+        .sort((first, second) => first.nextDate.localeCompare(second.nextDate))
         .slice(0, 5);
 
     return (
@@ -56,7 +54,9 @@ const FollowUpPanel = ({ applications, onEdit }) => {
                         return (
                             <li className={styles.item} key={application.id}>
                                 <div className={styles.dateBlock}>
-                                    <span>{getMonth(application.nextDate)}</span>
+                                    <span>
+                                        {getMonth(application.nextDate)}
+                                    </span>
                                     <strong>
                                         {new Date(
                                             application.nextDate + "T12:00:00",
@@ -104,7 +104,10 @@ const FollowUpPanel = ({ applications, onEdit }) => {
             ) : (
                 <div className={styles.empty}>
                     <h3>Nothing to chase today</h3>
-                    <p>Add a next step to an active application and it will appear here.</p>
+                    <p>
+                        Add a next step to an active application and it will
+                        appear here.
+                    </p>
                     <a href="#application-list">View applications</a>
                 </div>
             )}
@@ -113,4 +116,3 @@ const FollowUpPanel = ({ applications, onEdit }) => {
 };
 
 export { FollowUpPanel };
-
