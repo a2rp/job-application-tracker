@@ -2,6 +2,7 @@
 import { SiteHeader } from "./components/siteHeader/index.jsx";
 import { sampleApplications } from "./data/sampleApplications.js";
 import { BackToTop } from "./components/backToTop/index.jsx";
+import { SiteFooter } from "./components/siteFooter/index.jsx";
 import styles from "./App.module.css";
 
 const App = () => (
@@ -13,8 +14,10 @@ const App = () => (
                 <h2>Follow-ups</h2>
             </section>
         </main>
+        <SiteFooter />
         <BackToTop />
     </div>
 );
 
 export default App;
+
