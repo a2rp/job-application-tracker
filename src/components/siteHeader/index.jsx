@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FiBriefcase, FiMenu, FiX } from "react-icons/fi";
 import styles from "./styles.module.css";
@@ -44,7 +44,8 @@ const SiteHeader = () => {
                     id="site-navigation"
                     aria-label="Main navigation"
                 >
-                    <a href="#applications" onClick={closeMenu}>Applications</a>
+                    <a href="#applications" onClick={closeMenu}>Overview</a>
+                    <a href="#application-list" onClick={closeMenu}>Applications</a>
                     <a href="#follow-ups" onClick={closeMenu}>Follow-ups</a>
                 </nav>
                 <div className={styles.actions}>

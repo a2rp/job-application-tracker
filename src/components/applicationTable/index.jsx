@@ -1,4 +1,4 @@
-﻿import {
+import {
     FiCalendar,
     FiEdit2,
     FiExternalLink,
@@ -92,7 +92,7 @@ const ApplicationTable = ({
                     <span role="columnheader">Next step</span>
                     <span className={styles.screenReaderOnly} role="columnheader">Actions</span>
                 </div>
-                <div className={styles.tableBody}>
+                <div className={styles.tableBody} role="rowgroup">
                     {applications.map((application) => (
                         <article className={styles.application} role="row" key={application.id}>
                             <div className={styles.companyCell} role="cell">
