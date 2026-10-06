@@ -1,0 +1,34 @@
+﻿.button {
+    position: fixed;
+    z-index: 30;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    display: grid;
+    width: 47px;
+    height: 47px;
+    place-items: center;
+    border: 1px solid #a2ce3e;
+    border-radius: 50%;
+    background: var(--color-lime);
+    color: var(--color-ink);
+    box-shadow: 0 5px 16px rgb(32 33 30 / 18%);
+    font-size: 19px;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+
+    &:hover {
+        border-color: #86b629;
+        box-shadow: 0 7px 19px rgb(32 33 30 / 25%);
+    }
+
+    &:focus-visible {
+        outline: 3px solid var(--color-purple);
+        outline-offset: 3px;
+    }
+
+    @media (max-width: 640px) {
+        right: max(14px, env(safe-area-inset-right));
+        bottom: max(15px, env(safe-area-inset-bottom));
+        width: 43px;
+        height: 43px;
+    }
+}
