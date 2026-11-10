@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiX } from "react-icons/fi";
 import {
     applicationStatuses,
@@ -17,6 +17,8 @@ const getToday = () => {
 };
 
 const ApplicationModal = ({ application, onClose, onSave }) => {
+    const dialogRef = useRef(null);
+    const onCloseRef = useRef(onClose);
     const [form, setForm] = useState(() => ({
         company: application?.company ?? "",
         role: application?.role ?? "",
@@ -34,13 +36,55 @@ const ApplicationModal = ({ application, onClose, onSave }) => {
     }));
 
     useEffect(() => {
-        const closeOnEscape = (keyEvent) => {
-            if (keyEvent.key === "Escape") onClose();
+        onCloseRef.current = onClose;
+    }, [onClose]);
+
+    useEffect(() => {
+        const dialog = dialogRef.current;
+        if (!dialog) return undefined;
+        const previousFocus = document.activeElement;
+        const getFocusable = () => Array.from(dialog.querySelectorAll(
+            "button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]",
+        ));
+        (getFocusable()[0] || dialog).focus();
+
+        const handleKeys = (keyEvent) => {
+            if (keyEvent.key === "Escape") {
+                keyEvent.preventDefault();
+                onCloseRef.current();
+                return;
+            }
+            if (keyEvent.key !== "Tab") return;
+
+            const focusable = getFocusable();
+            if (!focusable.length) {
+                keyEvent.preventDefault();
+                dialog.focus();
+                return;
+            }
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (!dialog.contains(document.activeElement)) {
+                keyEvent.preventDefault();
+                (keyEvent.shiftKey ? last : first).focus();
+            } else if (keyEvent.shiftKey && document.activeElement === first) {
+                keyEvent.preventDefault();
+                last.focus();
+            } else if (!keyEvent.shiftKey && document.activeElement === last) {
+                keyEvent.preventDefault();
+                first.focus();
+            }
         };
 
-        document.addEventListener("keydown", closeOnEscape);
-        return () => document.removeEventListener("keydown", closeOnEscape);
-    }, [onClose]);
+        document.addEventListener("keydown", handleKeys);
+        return () => {
+            document.removeEventListener("keydown", handleKeys);
+            const returnFocus = previousFocus instanceof HTMLElement && previousFocus.isConnected
+                ? previousFocus
+                : document.getElementById("main-content");
+            returnFocus?.focus();
+        };
+    }, []);
 
     const updateField = (changeEvent) => {
         const { name, value } = changeEvent.target;
@@ -73,10 +117,13 @@ const ApplicationModal = ({ application, onClose, onSave }) => {
             }}
         >
             <section
+                ref={dialogRef}
                 className={styles.modal}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="application-modal-title"
+                aria-describedby="application-modal-description"
+                tabIndex={-1}
             >
                 <header className={styles.modalHeader}>
                     <div>
@@ -86,7 +133,7 @@ const ApplicationModal = ({ application, onClose, onSave }) => {
                                 ? "Edit application"
                                 : "Add an application"}
                         </h2>
-                        <p>Save the details you will want to find later.</p>
+                        <p id="application-modal-description">Save the details you will want to find later.</p>
                     </div>
                     <button
                         className={styles.closeButton}
@@ -202,7 +249,7 @@ const ApplicationModal = ({ application, onClose, onSave }) => {
                             />
                         </label>
                         <label className={styles.field}>
-                            Contact
+                            Contact name
                             <input
                                 name="contactName"
                                 maxLength="80"
@@ -212,17 +259,30 @@ const ApplicationModal = ({ application, onClose, onSave }) => {
                             />
                         </label>
                     </div>
-                    <label className={styles.field}>
-                        Job link
-                        <input
-                            name="url"
-                            type="url"
-                            maxLength="300"
-                            value={form.url}
-                            onChange={updateField}
-                            placeholder="https://"
-                        />
-                    </label>
+                    <div className={styles.fieldsTwo}>
+                        <label className={styles.field}>
+                            Contact email
+                            <input
+                                name="contactEmail"
+                                type="email"
+                                maxLength="254"
+                                value={form.contactEmail}
+                                onChange={updateField}
+                                placeholder="name@example.com"
+                            />
+                        </label>
+                        <label className={styles.field}>
+                            Job link
+                            <input
+                                name="url"
+                                type="url"
+                                maxLength="300"
+                                value={form.url}
+                                onChange={updateField}
+                                placeholder="https://"
+                            />
+                        </label>
+                    </div>
                     <label className={styles.field}>
                         Notes
                         <textarea

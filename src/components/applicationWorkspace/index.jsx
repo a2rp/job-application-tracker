@@ -5,33 +5,104 @@ import { ApplicationTable } from "../applicationTable/index.jsx";
 import { ConfirmationModal } from "../confirmationModal/index.jsx";
 import { CareerOverview } from "../careerOverview/index.jsx";
 import { FollowUpPanel } from "../followUpPanel/index.jsx";
+import { applicationStatuses, workModes } from "../../data/applicationStatuses.js";
 import { sampleApplications } from "../../data/sampleApplications.js";
 import styles from "./styles.module.css";
 
 const storageKey = "rolebook-applications-v1";
 
-const readApplications = () => {
-    try {
-        const savedApplications = window.localStorage.getItem(storageKey);
-        if (!savedApplications) return sampleApplications;
+const isDateValue = (value) => {
+    if (value === "") return true;
+    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        return false;
+    }
 
-        const parsedApplications = JSON.parse(savedApplications);
-        return Array.isArray(parsedApplications)
-            ? parsedApplications
-            : sampleApplications;
+    const date = new Date(`${value}T12:00:00`);
+    return !Number.isNaN(date.getTime())
+        && date.getFullYear() === Number(value.slice(0, 4))
+        && date.getMonth() + 1 === Number(value.slice(5, 7))
+        && date.getDate() === Number(value.slice(8, 10));
+};
+
+const isApplicationRecord = (application) => {
+    if (!application || typeof application !== "object") return false;
+
+    const requiredTextFields = ["company", "role"];
+    const optionalTextFields = [
+        "location", "nextStep", "salary", "contactName", "contactEmail", "url", "notes",
+    ];
+
+    return typeof application.id === "string"
+        && application.id.length > 0
+        && requiredTextFields.every((field) => typeof application[field] === "string")
+        && optionalTextFields.every((field) =>
+            application[field] === undefined || typeof application[field] === "string",
+        )
+        && applicationStatuses.includes(application.status)
+        && workModes.includes(application.workMode)
+        && isDateValue(application.dateApplied ?? "")
+        && isDateValue(application.nextDate ?? "");
+};
+
+const readApplications = () => {
+    let savedApplications;
+    try {
+        savedApplications = window.localStorage.getItem(storageKey);
     } catch {
-        return sampleApplications;
+        return {
+            applications: sampleApplications,
+            notice: "Browser storage is unavailable. Changes will not stay after this page closes.",
+        };
+    }
+
+    if (!savedApplications) return { applications: sampleApplications, notice: null };
+
+    try {
+        const parsedApplications = JSON.parse(savedApplications);
+        if (!Array.isArray(parsedApplications)) {
+            return {
+                applications: sampleApplications,
+                notice: "Saved application data could not be read. Example records are shown.",
+            };
+        }
+
+        const validApplications = parsedApplications
+            .filter(isApplicationRecord)
+            .map((application) => ({
+                ...application,
+                location: application.location ?? "",
+                dateApplied: application.dateApplied ?? "",
+                nextStep: application.nextStep ?? "",
+                nextDate: application.nextDate ?? "",
+                salary: application.salary ?? "",
+                contactName: application.contactName ?? "",
+                contactEmail: application.contactEmail ?? "",
+                url: application.url ?? "",
+                notes: application.notes ?? "",
+            }));
+        return {
+            applications: validApplications,
+            notice: validApplications.length === parsedApplications.length
+                ? null
+                : "Some saved application records were invalid and have been skipped.",
+        };
+    } catch {
+        return {
+            applications: sampleApplications,
+            notice: "Saved application data could not be read. Example records are shown.",
+        };
     }
 };
 
 const ApplicationWorkspace = () => {
-    const [applications, setApplications] = useState(readApplications);
+    const [initialRead] = useState(readApplications);
+    const [applications, setApplications] = useState(initialRead.applications);
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
     const [modalOpen, setModalOpen] = useState(false);
     const [applicationToEdit, setApplicationToEdit] = useState(null);
     const [applicationToRemove, setApplicationToRemove] = useState(null);
-    const [storageError, setStorageError] = useState(false);
+    const [storageNotice, setStorageNotice] = useState(initialRead.notice);
 
     const saveApplications = (updatedApplications) => {
         setApplications(updatedApplications);
@@ -41,9 +112,11 @@ const ApplicationWorkspace = () => {
                 storageKey,
                 JSON.stringify(updatedApplications),
             );
-            setStorageError(false);
+            setStorageNotice(null);
         } catch {
-            setStorageError(true);
+            setStorageNotice(
+                "Browser storage is unavailable. Changes will not stay after this page closes.",
+            );
         }
     };
 
@@ -145,9 +218,7 @@ const ApplicationWorkspace = () => {
                     />
                     <p className={styles.storageNote}>
                         <FiHardDrive aria-hidden="true" />
-                        {storageError
-                            ? "Browser storage is unavailable. Changes will not stay after this page closes."
-                            : "Your list is saved in this browser on this device."}
+                        {storageNotice || "Your list is saved in this browser on this device."}
                     </p>
                 </div>
                 <div className={styles.sideColumn}>

@@ -7,7 +7,7 @@ import styles from "./App.module.css";
 const App = () => (
     <div className={styles.appShell} id="top">
         <SiteHeader />
-        <main className={styles.pageContent}>
+        <main className={styles.pageContent} id="main-content" tabIndex={-1}>
             <ApplicationWorkspace />
         </main>
         <SiteFooter />

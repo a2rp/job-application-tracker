@@ -27,6 +27,14 @@ const getInitials = (company) =>
         .join("")
         .toUpperCase();
 
+const isSafeJobUrl = (value) => {
+    try {
+        return ["http:", "https:"].includes(new URL(value).protocol);
+    } catch {
+        return false;
+    }
+};
+
 const ApplicationTable = ({
     applications,
     search,
@@ -136,12 +144,12 @@ const ApplicationTable = ({
                                             : ""}
                                     </span>
                                 </div>
-                                {application.url ? (
+                                {isSafeJobUrl(application.url) ? (
                                     <a
                                         className={styles.jobLink}
                                         href={application.url}
                                         target="_blank"
-                                        rel="noreferrer"
+                                        rel="noopener noreferrer"
                                         aria-label={
                                             "Open job link for " +
                                             application.role +

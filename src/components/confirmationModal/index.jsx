@@ -44,7 +44,10 @@ const ConfirmationModal = ({
 
         return () => {
             dialog?.removeEventListener("keydown", handleKeys);
-            previousElement?.focus?.();
+            const returnFocus = previousElement instanceof HTMLElement && previousElement.isConnected
+                ? previousElement
+                : document.getElementById("main-content");
+            returnFocus?.focus();
         };
     }, [onCancel]);
 
